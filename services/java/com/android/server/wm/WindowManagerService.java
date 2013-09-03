@@ -11032,8 +11032,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mIsTokenSplitted.put(token, split);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     /** SPLIT VIEW **/
     private int mSplitViewTasks[];
     private int mNextSplitViewLocation;
@@ -11090,10 +11088,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mIsTokenSplitted.put(token, split);
     }
 
-=======
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
     /**
      * Notifies that the provided activity token has been touched, and
      * sets the focus to that activity, and move it to the front so it

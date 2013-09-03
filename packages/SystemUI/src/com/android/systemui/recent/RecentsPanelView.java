@@ -40,13 +40,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
-<<<<<<< HEAD
-<<<<<<< HEAD
-import android.graphics.Point;
-=======
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
 import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
@@ -961,8 +954,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     Log.e(TAG, "Recents does not have the permission to launch " + intent, e);
                 }
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	    /** notify split view layout changes **/
             try {
@@ -971,10 +962,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 Log.e(TAG, "Could not notify split view layout", e);
             }
 
-=======
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
         } else {
             throw new IllegalStateException("Oops, no tag on view to split!");
         }
