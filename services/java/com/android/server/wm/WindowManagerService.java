@@ -11033,6 +11033,7 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /** SPLIT VIEW **/
     private int mSplitViewTasks[];
     private int mNextSplitViewLocation;
@@ -11089,6 +11090,8 @@ public class WindowManagerService extends IWindowManager.Stub
         mIsTokenSplitted.put(token, split);
     }
 
+=======
+>>>>>>> 65cf1da... MultiWindow
 =======
 >>>>>>> 65cf1da... MultiWindow
     /**

@@ -41,7 +41,10 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.graphics.Point;
+=======
+>>>>>>> 65cf1da... MultiWindow
 =======
 >>>>>>> 65cf1da... MultiWindow
 import android.graphics.Rect;
@@ -959,6 +962,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 }
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	    /** notify split view layout changes **/
             try {
@@ -967,6 +971,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 Log.e(TAG, "Could not notify split view layout", e);
             }
 
+=======
+>>>>>>> 65cf1da... MultiWindow
 =======
 >>>>>>> 65cf1da... MultiWindow
         } else {

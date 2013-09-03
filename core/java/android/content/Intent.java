@@ -3660,10 +3660,16 @@ public class Intent implements Parcelable, Cloneable {
 
      /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      * set in an Intent passed to {@link Context#startActivity Context.startActivity()},
      * this flag will cause a newly launching task to be resized according to the split
      * view metrics, making it running alongside another app.
      * @hide
+=======
+	 * set in an Intent passed to {@link Context#startActivity Context.startActivity()},
+     * this flag will cause a newly launching task to be resized according to the split
+     * view metrics, making it running alongside another app.
+>>>>>>> 65cf1da... MultiWindow
 =======
 	 * set in an Intent passed to {@link Context#startActivity Context.startActivity()},
      * this flag will cause a newly launching task to be resized according to the split

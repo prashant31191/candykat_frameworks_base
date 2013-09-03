@@ -2492,6 +2492,14 @@ public class Activity extends ContextThemeWrapper
                 Log.e(TAG, "Cannot notify activity touched", e);
             }
         }
+        if (mIsSplitView) {
+            IWindowManager wm = (IWindowManager) WindowManagerGlobal.getWindowManagerService();
+            try {
+                wm.notifyActivityTouched(mToken, false);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Cannot notify activity touched", e);
+            }
+        }
         if (getWindow().superDispatchTouchEvent(ev)) {
             return true;
         }
