@@ -44,6 +44,9 @@ import com.android.internal.widget.ActionBarView;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.Activity;
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
 import android.app.KeyguardManager;
 import android.content.ComponentName;

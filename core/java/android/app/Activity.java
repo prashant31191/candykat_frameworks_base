@@ -43,6 +43,9 @@ import android.graphics.Canvas;
 =======
 import android.graphics.Point;
 import android.graphics.Rect;
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -2470,6 +2473,14 @@ public class Activity extends ContextThemeWrapper
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             onUserInteraction();
+        }
+        if (mIsSplitView) {
+            IWindowManager wm = (IWindowManager) WindowManagerGlobal.getWindowManagerService();
+            try {
+                wm.notifyActivityTouched(mToken, false);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Cannot notify activity touched", e);
+            }
         }
         if (mIsSplitView) {
             IWindowManager wm = (IWindowManager) WindowManagerGlobal.getWindowManagerService();

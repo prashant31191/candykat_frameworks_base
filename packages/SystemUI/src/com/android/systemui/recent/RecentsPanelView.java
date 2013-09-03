@@ -40,6 +40,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import android.graphics.Point;
+>>>>>>> 65cf1da... MultiWindow
 =======
 import android.graphics.Point;
 >>>>>>> 65cf1da... MultiWindow
@@ -59,6 +63,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Display;
 import android.view.IWindowManager;
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -69,6 +76,9 @@ import android.view.ViewGroup;
 =======
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
 import android.view.ViewPropertyAnimator;
 import android.view.ViewRootImpl;
@@ -92,7 +102,10 @@ import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 65cf1da... MultiWindow
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;

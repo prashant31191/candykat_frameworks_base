@@ -10973,6 +10973,9 @@ public class WindowManagerService extends IWindowManager.Stub
 
     /* @hide */
 
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
     @Override
     public void addSystemUIVisibilityFlag(int flag) {
@@ -11037,6 +11040,65 @@ public class WindowManagerService extends IWindowManager.Stub
         mIsTokenSplitted.put(token, split);
     }
 
+<<<<<<< HEAD
+=======
+    /** SPLIT VIEW **/
+    private int mSplitViewTasks[];
+    private int mNextSplitViewLocation;
+    private Map<Integer, Boolean> mIsTaskSplitted;
+    private Map<IBinder, Boolean> mIsTokenSplitted;
+    private Map<Integer, Integer> mTaskLocation;
+    private IBinder mTaskTouched;
+    private Rect mSplitViewRect = new Rect();
+
+    /**
+     * Returns whether or not the provided taskId is in split view mode
+     * or not. Remember that the taskId is shared between all activities
+     * of an app, thus children activities from the root one shares the
+     * same taskId.
+     *
+     * @param taskId The task id of the activity
+     * @return True if the task is in split view mode
+     */
+    public boolean isTaskSplitView(int taskId) {
+        if (mIsTaskSplitted.containsKey(taskId)) {
+            return mIsTaskSplitted.get(taskId);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Sets whether or not a task should be in split view or not. The
+     * update only occurs when activities performs a resume or restart
+     * operation.
+     *
+     * @param taskId The task id of the activity
+     * @param split True to enable split mode, false otherwise
+     */
+    public void setTaskSplitView(int taskId, boolean split) {
+        mIsTaskSplitted.put(taskId, split);
+        try {
+            mIsTokenSplitted.put(mActivityManager.getActivityForTask(taskId, false), split);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Cannot retrieve activity token for task " + taskId, e);
+        }
+    }
+
+    /**
+     * Notifies the WindowManager that the provided token is split
+     * or not. This is useful because children activities don't share
+     * the same token, so Activity can notify the window token is split
+     * as well based on the taskId it reads during performRestart.
+     *
+     * @param token The activity token
+     * @param split True if the token should be split
+     */
+    public void setTaskChildSplit(IBinder token, boolean split) {
+        mIsTokenSplitted.put(token, split);
+    }
+
+>>>>>>> 65cf1da... MultiWindow
     /**
      * Notifies that the provided activity token has been touched, and
      * sets the focus to that activity, and move it to the front so it
@@ -11158,5 +11220,8 @@ public class WindowManagerService extends IWindowManager.Stub
 
     }
     /** END SPLIT VIEW **/
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
 }

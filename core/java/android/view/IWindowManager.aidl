@@ -321,5 +321,8 @@ interface IWindowManager
     void setSplitViewRect(int l, int t, int r, int b);
 
     /** SPLIT VIEW END **/
+<<<<<<< HEAD
+>>>>>>> 65cf1da... MultiWindow
+=======
 >>>>>>> 65cf1da... MultiWindow
 }
