@@ -954,6 +954,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     Log.e(TAG, "Recents does not have the permission to launch " + intent, e);
                 }
             }
+<<<<<<< HEAD
 
 	    /** notify split view layout changes **/
             try {
@@ -962,6 +963,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 Log.e(TAG, "Could not notify split view layout", e);
             }
 
+=======
+>>>>>>> 65cf1da... MultiWindow
         } else {
             throw new IllegalStateException("Oops, no tag on view to split!");
         }
