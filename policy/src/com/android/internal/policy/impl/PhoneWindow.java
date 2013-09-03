@@ -39,6 +39,12 @@ import com.android.internal.widget.ActionBarContextView;
 import com.android.internal.widget.ActionBarOverlayLayout;
 import com.android.internal.widget.ActionBarView;
 
+<<<<<<< HEAD
+=======
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
+import android.app.Activity;
+>>>>>>> 65cf1da... MultiWindow
 import android.app.KeyguardManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
