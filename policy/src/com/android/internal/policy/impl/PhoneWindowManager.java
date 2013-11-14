@@ -47,11 +47,8 @@ import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-<<<<<<< HEAD
 import android.hardware.input.InputManager;
-=======
 import android.Manifest;
->>>>>>> 9a994be... Add native java screen recorder [1/2]
 import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.IAudioService;
@@ -876,7 +873,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mHandler.removeCallbacks(mScreenshotRunnable);
     }
 
-<<<<<<< HEAD
     private void cancelPendingScreencastChordAction() {
         mHandler.removeCallbacks(mScreencastRunnable);
     }
@@ -891,7 +887,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
                 mHandler.postDelayed(mRingerChordLongPress,
                         ViewConfiguration.getGlobalActionKeyTimeout());
-=======
+    }
+
     private void interceptScreenRecordChord() {
         if (mScreenRecordChordEnabled
                 && mVolumeUpKeyTriggered && mPowerKeyTriggered && !mVolumeDownKeyTriggered) {
@@ -902,15 +899,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 cancelPendingPowerKeyAction();
 
                 mHandler.postDelayed(mScreenRecordRunnable, getScreenRecordChordLongPressDelay());
->>>>>>> 9a994be... Add native java screen recorder [1/2]
             }
         }
     }
 
-<<<<<<< HEAD
     private void cancelPendingRingerChordAction() {
         mHandler.removeCallbacks(mRingerChordLongPress);
-=======
+    }
+
     private long getScreenRecordChordLongPressDelay() {
         if (mKeyguardDelegate.isShowing()) {
             // Double the time it takes to take a screenshot from the keyguard
@@ -922,7 +918,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void cancelPendingScreenRecordChordAction() {
         mHandler.removeCallbacks(mScreenRecordRunnable);
->>>>>>> 9a994be... Add native java screen recorder [1/2]
     }
 
     private final Runnable mPowerLongPress = new Runnable() {
@@ -967,7 +962,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     };
 
-<<<<<<< HEAD
     private final Runnable mScreencastRunnable = new Runnable() {
         @Override
         public void run() {
@@ -993,12 +987,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             volumePanel.postVolumeChanged(AudioManager.STREAM_RING,AudioManager.FLAG_SHOW_UI
                                           | AudioManager.FLAG_VIBRATE);
-=======
+    }
+
     private final Runnable mScreenRecordRunnable = new Runnable() {
         @Override
         public void run() {
             performScreenRecord();
->>>>>>> 9a994be... Add native java screen recorder [1/2]
         }
     };
 
@@ -2407,6 +2401,26 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     && mVolumeUpKeyConsumedByChord) {
                 if (!down) {
                     mVolumeUpKeyConsumedByChord = false;
+                }
+                return -1;
+            }
+        }
+
+        // If we think we might have a volume up & power key chord on the way
+        // but we're not sure, then tell the dispatcher to wait a little while and
+        // try again later before dispatching.
+        if (mScreenRecordChordEnabled && (flags & KeyEvent.FLAG_FALLBACK) == 0) {
+            if (mVolumeUpKeyTriggered && !mPowerKeyTriggered) {
+                final long now = SystemClock.uptimeMillis();
+                final long timeoutTime = mVolumeUpKeyTime + SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS;
+                if (now < timeoutTime) {
+                    return timeoutTime - now;
+                }
+            }
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP
+                    && mVolumeUpKeyConsumedByScreenRecordChord) {
+                if (!down) {
+                    mVolumeUpKeyConsumedByScreenRecordChord = false;
                 }
                 return -1;
             }
@@ -4643,7 +4657,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                 && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
                             mVolumeUpKeyTriggered = true;
                             mVolumeUpKeyTime = event.getDownTime();
-<<<<<<< HEAD
                             mVolumeUpKeyConsumedByChord = false;
                             cancelPendingPowerKeyAction();
                             cancelPendingScreenshotChordAction();
@@ -4655,7 +4668,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         cancelPendingScreenshotChordAction();
                         cancelPendingRingerChordAction();
                         cancelPendingScreencastChordAction();
-=======
                             mVolumeUpKeyConsumedByScreenRecordChord = false;
                             cancelPendingPowerKeyAction();
                             interceptScreenRecordChord();
@@ -4663,7 +4675,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     } else {
                         mVolumeUpKeyTriggered = false;
                         cancelPendingScreenRecordChordAction();
->>>>>>> 9a994be... Add native java screen recorder [1/2]
+                            mVolumeUpKeyConsumedByScreenRecordChord = false;
+                            cancelPendingPowerKeyAction();
+                            interceptScreenRecordChord();
+                        }
+                    } else {
+                        mVolumeUpKeyTriggered = false;
+                        cancelPendingScreenRecordChordAction();
                     }
                 }
                 if (down) {

@@ -895,20 +895,8 @@ public class InputMethodService extends AbstractInputMethodService {
      * is currently running in fullscreen mode.
      */
     public void updateFullscreenMode() {
-<<<<<<< HEAD
-        boolean isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
-=======
-        boolean fullScreenOverride = Settings.System.getIntForUser(getContentResolver(),
-                Settings.System.DISABLE_FULLSCREEN_KEYBOARD, 0,
-                UserHandle.USER_CURRENT_OR_SELF) != 0;
         int mHaloEnabled = (Settings.System.getInt(getContentResolver(), Settings.System.HALO_ENABLED, 0));
-        boolean isFullscreen;
-        if (fullScreenOverride) {
-            isFullscreen = false;
-        } else {
-            isFullscreen = (mHaloEnabled != 1) ? (onEvaluateFullscreenMode() || onEvaluateSplitView()) : mShowInputRequested && onEvaluateFullscreenMode();
-        }
->>>>>>> d02ca14... prevent multiwindow if halo enabled
+        boolean isFullscreen = (mHaloEnabled != 1) ? (onEvaluateFullscreenMode() || onEvaluateSplitView()) : mShowInputRequested && onEvaluateFullscreenMode();
         boolean changed = mLastShowInputRequested != mShowInputRequested;
         if (mIsFullscreen != isFullscreen || !mFullscreenApplied) {
             changed = true;
@@ -2450,3 +2438,4 @@ public class InputMethodService extends AbstractInputMethodService {
                 + " touchableRegion=" + mTmpInsets.touchableRegion);
     }
 }
+
