@@ -14286,6 +14286,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             // are made visible with the correct configuration.
             mStackSupervisor.ensureActivitiesVisibleLocked(starting, changes);
  	    
+<<<<<<< HEAD
             if (mWindowManager.isTaskSplitView(starting.task.taskId)) {
                 Log.e("XPLOD", "Split view restoring task " + starting.task.taskId + " -- " + mIgnoreSplitViewUpdate.size());
                 ActivityRecord second = mainStack.topRunningActivityLocked(starting);
@@ -14305,6 +14306,31 @@ public final class ActivityManagerService extends ActivityManagerNative
                     }
                 }
             }
+=======
+	    int mHaloEnabled = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.HALO_ENABLED, 0));
+
+	    if(mHaloEnabled != 1){
+		    if (mWindowManager.isTaskSplitView(starting.task.taskId)) {
+			Log.e("XPLOD", "Split view restoring task " + starting.task.taskId + " -- " + mIgnoreSplitViewUpdate.size());
+			ActivityRecord second = mainStack.topRunningActivityLocked(starting);
+			if (mWindowManager.isTaskSplitView(second.task.taskId)) {
+			    Log.e("XPLOD", "Split view restoring also task " + second.task.taskId);
+			    kept = kept && mainStack.ensureActivityConfigurationLocked(second, changes);
+			    mStackSupervisor.ensureActivitiesVisibleLocked(second, changes);
+			    if (mIgnoreSplitViewUpdate.contains(starting.task.taskId)) {
+			        Log.e("XPLOD", "Task "+ starting.task.taskId + " resuming ignored");
+			        mIgnoreSplitViewUpdate.removeAll(Collections.singleton((Integer) starting.task.taskId));
+			    } else {
+			        moveTaskToFront(second.task.taskId, 0, null);
+			        mIgnoreSplitViewUpdate.add(starting.task.taskId);
+			        mIgnoreSplitViewUpdate.add(second.task.taskId);
+			        mStackSupervisor.resumeTopActivitiesLocked();
+			        moveTaskToFront(starting.task.taskId, 0, null);
+			    }
+			}
+		    }
+	    }
+>>>>>>> d02ca14... prevent multiwindow if halo enabled
         }
 
         if (values != null && mWindowManager != null) {
