@@ -39,14 +39,8 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-<<<<<<< HEAD
-=======
 import android.graphics.Point;
 import android.graphics.Rect;
-<<<<<<< HEAD
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;

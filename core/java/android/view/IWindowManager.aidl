@@ -287,8 +287,6 @@ interface IWindowManager
      * @param enabled Whether touch exploration is enabled.
      */
     void setTouchExplorationEnabled(boolean enabled);
-<<<<<<< HEAD
-=======
 
     /**
      * Get the current navigation bar state when expanded desktop is enabled.
@@ -321,8 +319,4 @@ interface IWindowManager
     void setSplitViewRect(int l, int t, int r, int b);
 
     /** SPLIT VIEW END **/
-<<<<<<< HEAD
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
 }

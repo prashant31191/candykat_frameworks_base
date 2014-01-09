@@ -10951,8 +10951,6 @@ public class WindowManagerService extends IWindowManager.Stub
         return mWindowMap;
     }
 
-<<<<<<< HEAD
-=======
     /* @hide */
     @Override
     public boolean expandedDesktopHidesNavigationBar() {
@@ -10973,16 +10971,10 @@ public class WindowManagerService extends IWindowManager.Stub
 
     /* @hide */
 
-<<<<<<< HEAD
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
     @Override
     public void addSystemUIVisibilityFlag(int flag) {
         mLastStatusBarVisibility |= flag;
     }
-<<<<<<< HEAD
-=======
 
     /** SPLIT VIEW **/
     private int mSplitViewTasks[];
@@ -11040,8 +11032,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mIsTokenSplitted.put(token, split);
     }
 
-<<<<<<< HEAD
-=======
     /** SPLIT VIEW **/
     private int mSplitViewTasks[];
     private int mNextSplitViewLocation;
@@ -11098,7 +11088,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mIsTokenSplitted.put(token, split);
     }
 
->>>>>>> 65cf1da... MultiWindow
     /**
      * Notifies that the provided activity token has been touched, and
      * sets the focus to that activity, and move it to the front so it
@@ -11220,8 +11209,4 @@ public class WindowManagerService extends IWindowManager.Stub
 
     }
     /** END SPLIT VIEW **/
-<<<<<<< HEAD
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
 }

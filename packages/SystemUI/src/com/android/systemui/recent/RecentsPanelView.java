@@ -39,14 +39,8 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import android.graphics.Point;
->>>>>>> 65cf1da... MultiWindow
-=======
 import android.graphics.Point;
->>>>>>> 65cf1da... MultiWindow
 import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
@@ -58,28 +52,16 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
-<<<<<<< HEAD
-=======
 import android.view.Gravity;
 import android.view.Display;
 import android.view.IWindowManager;
-<<<<<<< HEAD
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
-=======
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
-<<<<<<< HEAD
->>>>>>> 65cf1da... MultiWindow
-=======
->>>>>>> 65cf1da... MultiWindow
 import android.view.ViewPropertyAnimator;
 import android.view.ViewRootImpl;
 import android.view.accessibility.AccessibilityEvent;
@@ -101,16 +83,10 @@ import com.android.systemui.statusbar.StatusBarPanel;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 65cf1da... MultiWindow
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
->>>>>>> 65cf1da... MultiWindow
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
         StatusBarPanel, Animator.AnimatorListener {
@@ -136,9 +112,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private boolean mFitThumbnailToXY;
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
-<<<<<<< HEAD
     private ImageView mClearRecents;
-=======
 
     private ImageView mClearAllRecents;
     private CircleMemoryMeter mRecentsMemoryIndicator;
@@ -160,7 +134,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     TextView mRamText;
 
     MemInfoReader mMemInfoReader = new MemInfoReader();
->>>>>>> 65cf1da... MultiWindow
 
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
