@@ -192,13 +192,11 @@ final class UiModeManagerService extends IUiModeManager.Stub {
         mContext.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-<<<<<<< HEAD
         ThemeUtils.registerThemeChangeReceiver(mContext, mThemeChangeReceiver);
-=======
+
         // Register settings observer and set initial preferences
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
->>>>>>> 40fedae... Dark UI: DJL4.4 goes TRDS
 
         mPowerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);

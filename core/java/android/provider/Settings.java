@@ -5700,11 +5700,8 @@ public final class Settings {
             MOUNT_UMS_PROMPT,
             MOUNT_UMS_NOTIFY_ENABLED,
             UI_NIGHT_MODE,
-<<<<<<< HEAD
             ADVANCED_REBOOT,
-=======
             UI_INVERTED_MODE,
->>>>>>> 40fedae... Dark UI: DJL4.4 goes TRDS
             PRIVACY_GUARD_DEFAULT,
             DEVELOPMENT_SHORTCUT
         };
