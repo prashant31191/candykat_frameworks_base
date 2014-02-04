@@ -2938,6 +2938,131 @@ public final class Settings {
         */
         public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
 
+<<<<<<< HEAD
+=======
+	/**
+         * Whether to show the network status in the status bar
+         * @hide
+         */
+        public static final String STATUS_BAR_NETWORK_STATS = "status_bar_network_stats";
+ 
+        /**
+         * Frequency at which stats are updated, in milliseconds
+         * @hide
+         */
+        public static final String STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL = "status_bar_network_stats_update_frequency";
+
+	/**
+         * Network stats Color style
+         * @hide
+         */
+        public static final String STATUS_BAR_NETWORK_COLOR = "status_bar_network_usage_color"; 
+
+        /**
+         * Enable looking up of phone numbers of nearby places
+         *
+         * @hide
+         */
+        public static final String ENABLE_FORWARD_LOOKUP = "enable_forward_lookup";
+
+        /**
+         * Enable looking up of information of phone numbers not in the contacts
+         *
+         * @hide
+         */
+        public static final String ENABLE_REVERSE_LOOKUP = "enable_reverse_lookup";
+
+        /**
+         * The forward lookup provider
+         *
+         * @hide
+         */
+        public static final String FORWARD_LOOKUP_PROVIDER = "forward_lookup_provider";
+
+        /**
+         * The reverse lookup provider
+         *
+         * @hide
+         */
+        public static final String REVERSE_LOOKUP_PROVIDER = "reverse_lookup_provider";
+
+        /**
+         * Network stats hide if there's no traffic
+         * @hide
+         */
+        public static final String STATUS_BAR_NETWORK_HIDE = "status_bar_network_hide";
+
+       /**
+	*
+	* SMOOTH PROGRESS BAR Mirror
+	* @hide
+	*/
+        public static final String PROGRESSBAR_MIRROR = "progressbar_mirror";
+
+	/**
+	*
+	* SMOOTH PROGRESS BAR Reverse
+	* @hide
+	*/
+        public static final String PROGRESSBAR_REVERSE = "progressbar_reverse";
+
+	/**
+	*
+	* SMOOTH PROGRESS BAR Speed
+	* @hide
+	*/
+        public static final String PROGRESSBAR_SPEED = "progressbar_speed";
+
+       /**
+	*
+	* SMOOTH PROGRESS BAR Width
+	* @hide
+	*/
+        public static final String PROGRESSBAR_WIDTH = "progressbar_width";
+
+        /**
+	*
+	* SMOOTH PROGRESS BAR Length
+	* @hide
+	*/
+        public static final String PROGRESSBAR_LENGTH = "progressbar_length";
+
+        /**
+	*
+	* SMOOTH PROGRESS BAR Count
+	* @hide
+	*/
+        public static final String PROGRESSBAR_COUNT = "progressbar_count";
+
+        /**
+	*
+	* SMOOTH PROGRESS BAR Color_1
+	* @hide
+	*/
+        public static final String PROGRESSBAR_COLOR_1 = "progressbar_color_1";
+
+        /**
+	*
+	* SMOOTH PROGRESS BAR Color_2
+	* @hide
+	*/
+        public static final String PROGRESSBAR_COLOR_2 = "progressbar_color_2";
+
+        /**
+	*
+	* SMOOTH PROGRESS BAR Color_3
+	* @hide
+	*/
+        public static final String PROGRESSBAR_COLOR_3 = "progressbar_color_3";
+
+        /**
+	*
+	* SMOOTH PROGRESS BAR Color_4
+	* @hide
+	*/
+        public static final String PROGRESSBAR_COLOR_4 = "progressbar_color_4";
+
+>>>>>>> fc70dc9... Frameworks: Open source google dialer and more (4/5)
         /**
          * Display style of AM/PM next to clock in status bar
          * 0: Normal display (Eclair stock)
