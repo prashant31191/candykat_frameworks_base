@@ -16,6 +16,7 @@
 
 package com.android.keyguard;
 
+import android.app.PendingIntent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +24,7 @@ import android.graphics.drawable.TransitionDrawable;
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -30,8 +32,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.ContentResolver;
-import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
@@ -40,7 +40,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.os.PowerManager;
@@ -49,11 +48,6 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.renderscript.Allocation;
-import android.renderscript.Allocation.MipmapControl;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -98,9 +92,6 @@ public class KeyguardViewManager {
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
 
-    // Lockscreen blur
-    private Bitmap mBlurredImage = null;
-
     private boolean mUnlockKeyDown = false;
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
@@ -129,7 +120,6 @@ public class KeyguardViewManager {
         mViewManager = viewManager;
         mViewMediatorCallback = callback;
         mLockPatternUtils = lockPatternUtils;
-
     }
 
     /**
@@ -175,34 +165,6 @@ public class KeyguardViewManager {
     private boolean shouldEnableTranslucentDecor() {
         Resources res = mContext.getResources();
         return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor);
-    }
-
-    // Lockscreen blur
-    public void setBackgroundBitmap(Bitmap bmp) {
-        if (bmp != null) {
-            mBlurredImage = blurBitmap(bmp, bmp.getWidth() < 900 ? 14: 18);
-        } else {
-            mBlurredImage = null;
-        }
-    }
-
-    private Bitmap blurBitmap(Bitmap bmp, int radius) {
-        Bitmap out = Bitmap.createBitmap(bmp);
-        RenderScript rs = RenderScript.create(mContext);
-
-        Allocation input = Allocation.createFromBitmap(
-                rs, bmp, MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
-        Allocation output = Allocation.createTyped(rs, input.getType());
-
-        ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-        script.setInput(input);
-        script.setRadius(radius);
-        script.forEach(output);
-
-        output.copyTo(out);
-
-        rs.destroy();
-        return out;
     }
 
     class ViewManagerHost extends FrameLayout {
@@ -311,8 +273,7 @@ public class KeyguardViewManager {
             if (bgAspect > vAspect) {
                 background.setBounds(0, 0, (int) (vHeight * bgAspect), vHeight);
             } else {
-                background.setBounds(0, 0, vWidth,
-                        (int) (vWidth * (vAspect >= 1 ? bgAspect : (1 / bgAspect))));
+                background.setBounds(0, 0, vWidth, (int) (vWidth / bgAspect));
             }
         }
 
@@ -555,15 +516,10 @@ public class KeyguardViewManager {
             inflateKeyguardView(options);
             mKeyguardView.requestFocus();
         }
-
         updateUserActivityTimeoutInWindowLayoutParams();
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
         mKeyguardHost.restoreHierarchyState(mStateContainer);
-
-	if (mBlurredImage != null) {
-            KeyguardUpdateMonitor.getInstance(mContext).dispatchSetBackground(mBlurredImage);
-        }
     }
 
     private void inflateKeyguardView(Bundle options) {
@@ -632,7 +588,7 @@ public class KeyguardViewManager {
     }
 
     void updateShowWallpaper(boolean show) {
-	if (show) {
+        if (show) {
             mWindowLayoutParams.flags |= WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
         } else {
             mWindowLayoutParams.flags &= ~WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
