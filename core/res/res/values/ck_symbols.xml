@@ -5,5 +5,8 @@
   <!-- Halo -->
   <java-symbol type="style" name="Theme.DeviceDefault.FloatingWindow" />
   <java-symbol type="style" name="Theme.DeviceDefault.FloatingWindowLight" />
+
+  <!-- BeanStalk platlogo -->
+  <java-symbol type="drawable" name="bs_platlogo" />
   
 </resources>
