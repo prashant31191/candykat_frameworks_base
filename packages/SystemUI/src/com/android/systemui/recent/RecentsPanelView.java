@@ -41,6 +41,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -51,7 +52,6 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Display;
 import android.view.IWindowManager;
 import android.view.LayoutInflater;
@@ -59,7 +59,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewRootImpl;
@@ -83,9 +82,6 @@ import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
         StatusBarPanel, Animator.AnimatorListener {
@@ -112,27 +108,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
     private ImageView mClearRecents;
-
-    private ImageView mClearAllRecents;
-    private CircleMemoryMeter mRecentsMemoryIndicator;
-
     private int mDragPositionX;
     private int mDragPositionY;
-    private ImageView mClearRecents;
-
-    private LinearColorBar mRamUsageBar;
-    private boolean mUpdateMemoryIndicator;
-
-    private long mFreeMemory;
-    private long mTotalMemory;
-    private long mCachedMemory;
-    private long mActiveMemory;
-
-    TextView mUsedMemText;
-    TextView mFreeMemText;
-    TextView mRamText;
-
-    MemInfoReader mMemInfoReader = new MemInfoReader();
 
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
@@ -418,10 +395,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     mDragPositionY = currY;
                     break;
 
-                case MotionEvent.ACTION_UP:
-                    handleThumbnailDragRelease(thumb);
-                    break;
-
                 case MotionEvent.ACTION_MOVE:
                     int diffX = currX - mDragPositionX;
                     int diffY = currY - mDragPositionY;
@@ -436,21 +409,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             mDragPositionX = 0;
             mDragPositionY = 0;
             return false;
-        }
-    }
-
-    private void handleThumbnailDragRelease(View view) {
-        ViewHolder holder = (ViewHolder) view.getTag();
-        WindowManager wm = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        if (mDragPositionY < height/2) {
-            openInSplitView(holder, 0);
-        } else {
-            openInSplitView(holder, 1);
         }
     }
 
@@ -879,8 +837,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     /**
 	* Opens the task linked in the ViewHolder in split view mode.
 	* @param holder ViewHolder of a task thumbnail
-	* @param location Where to put the split app (-1 for auto, 0 for top, 1 for bottom (the
-	* reference is a phone in portrait))
+ 	* @param location Where to put the split app (-1 for auto, 0 for top, 1 for bottom (the
+ 	* reference is a phone in portrait))
     */
     public void openInSplitView(ViewHolder holder, int location) {
         if (holder != null) {
@@ -892,41 +850,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             TaskDescription ad = holder.taskDescription;
 
             show(false);
-            dismissAndDoNothing();
-
-            // If we weren't on the homescreen, resize the previous activity (if not already split)
-            final List<ActivityManager.RecentTaskInfo> recentTasks =
-                am.getRecentTasks(20, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
-
-            if (recentTasks != null && recentTasks.size() > 0) {
-                final PackageManager pm = mContext.getPackageManager();
-                ActivityInfo homeInfo = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
-                        .resolveActivityInfo(pm, 0);
-                int taskInt = 0;
-                ActivityManager.RecentTaskInfo taskInfo = recentTasks.get(1);
-                Log.e("XPLOD", "Resizing previous activity " + taskInfo.baseIntent);
-                Intent intent = new Intent(taskInfo.baseIntent);
-                if (taskInfo.origActivity != null) {
-                    intent.setComponent(taskInfo.origActivity);
-                }
-
-                ComponentName component = intent.getComponent();
-
-                if (homeInfo == null
-                    || !homeInfo.packageName.equals(component.getPackageName())
-                    || !homeInfo.name.equals(component.getClassName())) {
-                    Log.e("XPLOD", "not home intent, splitting");
-                    // This is not the home activity, so split it
-                    try {
-                        wm.setTaskSplitView(taskInfo.persistentId, true);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Could not set previous task to split view", e);
-                    }
-
-                    // We move this to front first, then our activity, so it updates
-                    am.moveTaskToFront(taskInfo.persistentId, 0, null);
-                }
-            }
+            dismissAndDoNothing();            
 
             if (ad.taskId >= 0) {
                 // The task is already launched. The Activity will pull its split
@@ -954,17 +878,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     Log.e(TAG, "Recents does not have the permission to launch " + intent, e);
                 }
             }
-<<<<<<< HEAD
-
-	    /** notify split view layout changes **/
-            try {
-                ActivityManagerNative.getDefault().notifySplitViewLayoutChanged();
-            } catch (RemoteException e) {
-                Log.e(TAG, "Could not notify split view layout", e);
-            }
-
-=======
->>>>>>> 65cf1da... MultiWindow
         } else {
             throw new IllegalStateException("Oops, no tag on view to split!");
         }
