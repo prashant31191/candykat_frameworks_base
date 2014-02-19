@@ -1197,15 +1197,4 @@ public class AppOpsManager {
         } catch (RemoteException e) {
         }
     }
-<<<<<<< HEAD
-
-    /** @hide */
-    public void resetCounters() {
-        try {
-            mService.resetCounters();
-        } catch (RemoteException e) {
-        }
-    }
-=======
->>>>>>> parent of 9c0bcda... [2/2] Framework AppOps: Add per Op allowed and ignored counters
 }
