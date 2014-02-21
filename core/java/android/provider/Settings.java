@@ -3042,7 +3042,6 @@ public final class Settings {
 	*/
         public static final String PROGRESSBAR_COLOR_4 = "progressbar_color_4";
 
->>>>>>> fc70dc9... Frameworks: Open source google dialer and more (4/5)
         /**
          * Display style of AM/PM next to clock in status bar
          * 0: Normal display (Eclair stock)
