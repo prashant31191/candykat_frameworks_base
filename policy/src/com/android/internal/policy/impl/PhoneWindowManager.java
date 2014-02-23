@@ -529,7 +529,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mScreenRecordChordEnabled = true;
     private boolean mVolumeDownKeyTriggered;
     private long mVolumeDownKeyTime;
-    private long mVolumeUpKeyTime;
     private boolean mVolumeDownKeyConsumedByChord;
     private boolean mVolumeUpKeyConsumedByChord;
     private boolean mVolumeUpKeyTriggered;
@@ -887,24 +886,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
                 mHandler.postDelayed(mRingerChordLongPress,
                         ViewConfiguration.getGlobalActionKeyTimeout());
+            }
+        }
     }
 
     private void interceptScreenRecordChord() {
         if (mScreenRecordChordEnabled
                 && mVolumeUpKeyTriggered && mPowerKeyTriggered && !mVolumeDownKeyTriggered) {
             final long now = SystemClock.uptimeMillis();
-            if (now <= mVolumeUpKeyTime + SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS
-                    && now <= mPowerKeyTime + SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS) {
+            if (now <= mVolumeUpKeyTime + ACTION_CHORD_DEBOUNCE_DELAY_MILLIS
+                    && now <= mPowerKeyTime + ACTION_CHORD_DEBOUNCE_DELAY_MILLIS) {
                 mVolumeUpKeyConsumedByScreenRecordChord = true;
                 cancelPendingPowerKeyAction();
 
                 mHandler.postDelayed(mScreenRecordRunnable, getScreenRecordChordLongPressDelay());
             }
         }
-    }
-
-    private void cancelPendingRingerChordAction() {
-        mHandler.removeCallbacks(mRingerChordLongPress);
     }
 
     private long getScreenRecordChordLongPressDelay() {
@@ -918,6 +915,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void cancelPendingScreenRecordChordAction() {
         mHandler.removeCallbacks(mScreenRecordRunnable);
+    }
+
+    private void cancelPendingRingerChordAction() {
+        mHandler.removeCallbacks(mRingerChordLongPress);
     }
 
     private final Runnable mPowerLongPress = new Runnable() {
@@ -987,7 +988,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             volumePanel.postVolumeChanged(AudioManager.STREAM_RING,AudioManager.FLAG_SHOW_UI
                                           | AudioManager.FLAG_VIBRATE);
-    }
+        }
+    };
 
     private final Runnable mScreenRecordRunnable = new Runnable() {
         @Override
@@ -1236,7 +1238,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                     @Override
                     public void onSwipeFromRight() {
-                        if (mNavigationBar != null && !mNavigationBarOnBottom) {
+                        if (mNavigationBar != null && !mNavigationBarOnBottom &&
+                                !mNavigationBarLeftInLandscape) {
                             requestTransientBars(mNavigationBar);
                         }
                     }
@@ -2412,27 +2415,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mScreenRecordChordEnabled && (flags & KeyEvent.FLAG_FALLBACK) == 0) {
             if (mVolumeUpKeyTriggered && !mPowerKeyTriggered) {
                 final long now = SystemClock.uptimeMillis();
-                final long timeoutTime = mVolumeUpKeyTime + SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS;
-                if (now < timeoutTime) {
-                    return timeoutTime - now;
-                }
-            }
-            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP
-                    && mVolumeUpKeyConsumedByScreenRecordChord) {
-                if (!down) {
-                    mVolumeUpKeyConsumedByScreenRecordChord = false;
-                }
-                return -1;
-            }
-        }
-
-        // If we think we might have a volume up & power key chord on the way
-        // but we're not sure, then tell the dispatcher to wait a little while and
-        // try again later before dispatching.
-        if (mScreenRecordChordEnabled && (flags & KeyEvent.FLAG_FALLBACK) == 0) {
-            if (mVolumeUpKeyTriggered && !mPowerKeyTriggered) {
-                final long now = SystemClock.uptimeMillis();
-                final long timeoutTime = mVolumeUpKeyTime + SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS;
+                final long timeoutTime = mVolumeUpKeyTime + ACTION_CHORD_DEBOUNCE_DELAY_MILLIS;
                 if (now < timeoutTime) {
                     return timeoutTime - now;
                 }
@@ -4658,30 +4641,17 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             mVolumeUpKeyTriggered = true;
                             mVolumeUpKeyTime = event.getDownTime();
                             mVolumeUpKeyConsumedByChord = false;
+                            mVolumeUpKeyConsumedByScreenRecordChord = false;
                             cancelPendingPowerKeyAction();
-                            cancelPendingScreenshotChordAction();
+                            interceptScreenRecordChord();
                             interceptRingerChord();
                             interceptScreencastChord();
                         }
                     } else {
                         mVolumeUpKeyTriggered = false;
-                        cancelPendingScreenshotChordAction();
+                        cancelPendingScreenRecordChordAction();
                         cancelPendingRingerChordAction();
                         cancelPendingScreencastChordAction();
-                            mVolumeUpKeyConsumedByScreenRecordChord = false;
-                            cancelPendingPowerKeyAction();
-                            interceptScreenRecordChord();
-                        }
-                    } else {
-                        mVolumeUpKeyTriggered = false;
-                        cancelPendingScreenRecordChordAction();
-                            mVolumeUpKeyConsumedByScreenRecordChord = false;
-                            cancelPendingPowerKeyAction();
-                            interceptScreenRecordChord();
-                        }
-                    } else {
-                        mVolumeUpKeyTriggered = false;
-                        cancelPendingScreenRecordChordAction();
                     }
                 }
                 if (down) {
@@ -6314,3 +6284,4 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mNavigationBarController.dump(pw, prefix);
     }
 }
+

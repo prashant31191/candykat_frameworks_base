@@ -2920,6 +2920,12 @@ public final class Settings {
         */
         public static final String EXPANDED_RING_MODE = "expanded_ring_mode";
 
+       /**
+         * HALO enabled, should default to 0 (HALO is disabled)
+         * @hide
+         */
+        public static final String HALO_ENABLED = "halo_enabled";
+
         /**
         * Notification Power Widget - Custom Torch Mode
         * @hide
@@ -3528,18 +3534,6 @@ public final class Settings {
          * @hide
          */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
-
-        /**
-         * Width and height of output vide expressed in WxH
-         * @hide
-         */
-        public static final String SCREEN_RECORDER_OUTPUT_DIMENSIONS = "screen_recorder_output_dimensions";
-
-        /**
-         * Screen recorder framerate in bits per second
-         * @hide
-         */
-        public static final String SCREEN_RECORDER_BITRATE = "screen_recorder_bitrate";
 
         /**
          * Width and height of output vide expressed in WxH
