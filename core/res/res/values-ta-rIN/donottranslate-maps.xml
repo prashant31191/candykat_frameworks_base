@@ -14,6 +14,13 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<dream xmlns:android="http://schemas.android.com/apk/res/android"
-    android:settingsActivity="com.android.systemui/com.android.systemui.DessertCaseDreamSettings"
-/>
+<resources>
+    <!-- Stub for Tamil -->
+    <integer-array name="maps_starting_lat_lng">
+        <item>20593684</item>
+        <item>78962880</item>
+    </integer-array>
+    <integer-array name="maps_starting_zoom">
+        <item>3</item>
+    </integer-array>
+</resources>

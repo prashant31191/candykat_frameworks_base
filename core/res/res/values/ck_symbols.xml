@@ -6,4 +6,7 @@
   <java-symbol type="style" name="Theme.DeviceDefault.FloatingWindow" />
   <java-symbol type="style" name="Theme.DeviceDefault.FloatingWindowLight" />
   
+  <!-- CandyKat platlogo -->
+  <java-symbol type="drawable" name="cm_platlogo" />
+
 </resources>
