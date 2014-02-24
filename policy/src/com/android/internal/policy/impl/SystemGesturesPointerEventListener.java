@@ -36,7 +36,6 @@ public class SystemGesturesPointerEventListener implements PointerEventListener 
     private static final int SWIPE_FROM_TOP = 1;
     private static final int SWIPE_FROM_BOTTOM = 2;
     private static final int SWIPE_FROM_RIGHT = 3;
-    private static final int SWIPE_FROM_LEFT = 4;
 
     private final int mSwipeStartThreshold;
     private final int mSwipeDistanceThreshold;
